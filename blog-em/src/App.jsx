@@ -1,4 +1,4 @@
-import { Posts } from "./Posts";
+import { Posts } from "./components/Posts";
 import "./App.css";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";

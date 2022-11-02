@@ -27,7 +27,7 @@ export function Posts() {
   }, [currentPage]);
 
   // replace with useQuery
-  const { data, isError, error, isLoading, isFetching } = useQuery(
+  const { data, isError, error, isLoading } = useQuery(
     ["posts", currentPage],
     () => fetchPosts(currentPage),
     {
@@ -36,7 +36,6 @@ export function Posts() {
     }
   );
 
-  if (isFetching) return <h3>Fetching in progress...</h3>;
   if (isLoading) return <h3>Loading...</h3>;
   if (isError)
     return (

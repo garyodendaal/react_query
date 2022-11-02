@@ -1,4 +1,4 @@
-import { extendTheme, withDefaultColorScheme } from '@chakra-ui/react';
+import { extendTheme } from '@chakra-ui/react';
 
 export const theme = extendTheme({
   styles: {
@@ -11,7 +11,7 @@ export const theme = extendTheme({
   },
   fonts: {
     body: 'Lato, sans-serif',
-    heading: 'Forum, sans-serif',
+    heading: 'Forum, serif',
     mono: 'Menlo, monospace',
   },
   colors: {
@@ -28,5 +28,4 @@ export const theme = extendTheme({
       900: '#051005',
     },
   },
-  // withDefaultColorScheme({ colorScheme: "brand" }),
 });

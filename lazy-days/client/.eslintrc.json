@@ -69,7 +69,7 @@
       {
         "endOfLine": "auto"
       }
-    ],
+    ],    
     "react/jsx-one-expression-per-line": "off",
     "react/jsx-curly-newline": "off"
   }

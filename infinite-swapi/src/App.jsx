@@ -14,6 +14,7 @@ function App() {
         <InfinitePeople />
         {/* <InfiniteSpecies /> */}
       </div>
+      <ReactQueryDevtools />
     </QueryClientProvider>
   );
 }

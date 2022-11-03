@@ -14,4 +14,6 @@
 // }
 
 // to satisfy typescript until this file has uncommented contents
-export {};
+import { QueryClient } from 'react-query';
+
+export const queryClient = new QueryClient();

@@ -1,5 +1,5 @@
 import { ChakraProvider } from '@chakra-ui/react';
-import { ReactElement, useEffect } from 'react';
+import { ReactElement } from 'react';
 import { QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 

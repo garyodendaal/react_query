@@ -43,6 +43,8 @@ export function getAvailableAppointments(
   // clone so as not to mutate argument directly
   const filteredAppointments = { ...appointments };
 
+  // eslint-disable-next-line no-console
+  console.log('Filetered', filteredAppointments);
   // only keep appointments that are open (or taken by the logged-in user) and are not in the past)
   Object.keys(filteredAppointments).forEach((date) => {
     filteredAppointments[date] = filteredAppointments[date].filter(

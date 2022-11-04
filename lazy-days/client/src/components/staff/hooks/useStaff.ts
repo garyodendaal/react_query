@@ -22,9 +22,10 @@ export function useStaff(): UseStaff {
   // for filtering staff by treatment
   const [filter, setFilter] = useState('all');
 
-  const selectFn = useCallback((data) => filterByTreatment(data, filter), [
-    filter,
-  ]);
+  const selectFn = useCallback(
+    (unfilteredStaff) => filterByTreatment(unfilteredStaff, filter),
+    [filter],
+  );
   // TODO: get data from server∏ via useQuery
   const { data: staff = [] } = useQuery(queryKeys.staff, getStaff, {
     select: filter === 'all' ? (data) => data : selectFn,

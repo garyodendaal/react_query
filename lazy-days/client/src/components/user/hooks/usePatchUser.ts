@@ -1,7 +1,8 @@
 /* eslint-disable no-console */
 import { useCustomToast } from 'components/app/hooks/useCustomToast';
 import jsonpatch from 'fast-json-patch';
-import { UseMutateFunction, useMutation } from 'react-query';
+import { UseMutateFunction, useMutation, useQueryClient } from 'react-query';
+import { queryKeys } from 'react-query/constants';
 
 import type { User } from '../../../../../shared/types';
 import { axiosInstance, getJWTHeader } from '../../../axiosInstance';
@@ -36,10 +37,33 @@ export function usePatchUser(): UseMutateFunction<
 > {
   const { user, updateUser } = useUser();
   const toast = useCustomToast();
+  const queryClient = useQueryClient();
   // TODO: replace with mutate function
   const { mutate: patchUser } = useMutation(
     (newUserData: User) => patchUserOnServer(newUserData, user),
     {
+      // onMutate returns context that is passed to onError
+      onMutate: async (newData: User | null) => {
+        // cancel any outgong queries so the optomistic update is not overwritten
+        queryClient.cancelQueries();
+        // snapshot of previous data
+
+        const previousUserData: User = queryClient.getQueryData(queryKeys.user);
+        // optimistically update the cache with new user value
+        updateUser(newData);
+        // return context to object with snapshotted value
+        return { previousUserData };
+      },
+      onError: (error, newData, context) => {
+        // rollback
+        if (context.previousUserData) {
+          updateUser(context.previousUserData);
+          toast({
+            title: 'Update failed, rolling back',
+            status: 'warning',
+          });
+        }
+      },
       onSuccess: (userData: User | null) => {
         if (user) {
           updateUser(userData);
@@ -48,6 +72,9 @@ export function usePatchUser(): UseMutateFunction<
             status: 'success',
           });
         }
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries(queryKeys.user);
       },
     },
   );

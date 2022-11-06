@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from 'react-query';
+import { UseMutateFunction, useMutation, useQueryClient } from 'react-query';
 
 import { Appointment } from '../../../../../shared/types';
 import { axiosInstance } from '../../../axiosInstance';
@@ -14,7 +14,12 @@ async function removeAppointmentUser(appointment: Appointment): Promise<void> {
 }
 
 // TODO: update return type
-export function useCancelAppointment(): (appointment: Appointment) => void {
+export function useCancelAppointment(): UseMutateFunction<
+  void,
+  unknown,
+  Appointment,
+  unknown
+> {
   const toast = useCustomToast();
   const queryClient = useQueryClient();
   // TODO: replace with mutate function
